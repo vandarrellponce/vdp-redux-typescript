@@ -7,7 +7,16 @@ interface SampleState {
   loading: boolean
 }
 
-const reducer = (state: SampleState, action: Action): SampleState => {
+const initialState = {
+  data: [],
+  error: null,
+  loading: false,
+}
+
+const reducer = (
+  state: SampleState = initialState,
+  action: Action
+): SampleState => {
   switch (action.type) {
     case ActionType.SEARCH_START:
       return { loading: true, error: null, data: [] }
