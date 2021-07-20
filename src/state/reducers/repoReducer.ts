@@ -4,29 +4,34 @@ interface SampleState {
   loading: boolean
 }
 
+enum ActionType {
+  SEARCH_START = 'search_start',
+  SEARCH_SUCCESS = 'search_success',
+  SEARCH_ERROR = 'search_error',
+}
+
 interface SearchStartAction {
-  type: 'start_search'
+  type: ActionType.SEARCH_START
 }
 
 interface SearchSuccessAction {
-  type: 'search_success'
+  type: ActionType.SEARCH_SUCCESS
   payload: string[]
 }
 interface SearchErrorAction {
-  type: 'search_error'
+  type: ActionType.SEARCH_ERROR
   payload: string
 }
 
-const reducer = (
-  state: SampleState,
-  action: SearchStartAction | SearchSuccessAction | SearchErrorAction
-): SampleState => {
+type Action = SearchStartAction | SearchSuccessAction | SearchErrorAction
+
+const reducer = (state: SampleState, action: Action): SampleState => {
   switch (action.type) {
-    case 'start_search':
+    case ActionType.SEARCH_START:
       return { loading: true, error: null, data: [] }
-    case 'search_success':
+    case ActionType.SEARCH_SUCCESS:
       return { loading: false, error: null, data: action.payload }
-    case 'search_error':
+    case ActionType.SEARCH_ERROR:
       return { loading: false, error: action.payload, data: [] }
     default:
       return state
